@@ -46,13 +46,13 @@ input {
 }
 
 .card-image {
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   padding-bottom: 65%;
   background-image: url("../images/banner.png");
   background-repeat: no-repeat;
-  background-size: 300%;
-  background-position: 0 5%;
+  background-size: 100%;
+  background-position:0;
   position: relative;
 }
 
