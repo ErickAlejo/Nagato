@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <title>Generate</title>
+</head>
+<body class="body">
+    <main>
+        <div class="container-sidebar">
+            <div class="sidebar__image">
+                {% for a in data['routerboard'] %}
+                {% if a['model'] == 'RB750Gr3' %}
+                <a href="/"><img src="../static/images/RB750Gr3.png" alt="" srcset=""></a>
+                {% elif a['model'] == 'RB760iGS' %}
+                <a href="/"><img src="../static/images/RB760iGS.png" alt="" srcset=""></a>
+                {% elif a['model'] == 'RB3011UiAS-RM' %}
+                <a href="/"><img src="../static/images/RB3011UiAS-RM.png" alt="" srcset=""></a>
+                {% elif a['model'] == 'RB4011iGS+RM' %}
+                <a href="/"><img src="../static/images/RB4011iGS+RM.png" alt="" srcset=""></a>
+                {% elif a['model'] == 'RB960PGS' %}
+                <a href="/"><img src="../static/images/RB960PGS.png" alt="" srcset=""></a>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div class="sidebar__text">
+                <h2>Information General</h2>
+                {% for a in data['hostname'] %}
+                <p><strong>Name  </strong>{{ a['name'] }}</p>
+                {% endfor %}
+                
+                {% for a in data['ipaddress']%}
+                {% if a['interface'] == 'lo0' %}
+                <p><strong>IP  </strong>{{a['network']}}</p>
+                {% endif %}
+                {% endfor %}
+                
+                {% for a in data['routerboard'] %}
+                <p><strong>Modelo  </strong>{{a['model']}}</p>
+                <p><strong>Firmware  </strong>{{a['current-firmware']}}</p>
+                {% endfor %}
+                <a class="button" href="/">
+                    <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"><path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path></svg>
+                    <span>Back</span>
+                </a>
+            </div>
+        </div>
+        <div class="container-information">
+            <div class="information__header">
+            {% for a in data['hostname'] %}
+                <h2>{{ a['name'] }}</h2>
+            {% endfor %}
+            </div>
+            <div class="information__container">
+                
+                <div class="container-title">
+                    <h2>Interfaces Status</h2>
+                </div>
+                <div class="cards cards-interfaces">
+                    {% for a in data['interfaces'] %}
+                    <div class="cards-info interface">
+                        <p><strong>Name</strong> : {{a['name']}}</p>
+                        <p><strong>Speed</strong> : {{a['speed']}}</p>
+                        <p><strong>MTU</strong> : {{a['mtu']}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="container-title">
+                    <h2>IP Address</h2>
+                </div>
+                
+                <div class="cards cards-ipaddress">
+                    {% for a in data['ipaddress'] %}
+                    <div class="cards-info ipaddress">
+                        <p><strong>IP on interfaces</strong>  {{a['interface']}}</p>
+                        <p><strong>Network</strong>  {{a['network']}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="container-title">
+                    <h2>OSPF Neighbors</h2>
+                </div>
+                <div class="cards cards-ospf">
+                    {% for a in data['ospf'] %}
+                    <div class=" cards-info ospf">
+                        <p><strong>Interface</strong>:  {{a['interface']}}</p>
+                        <p><strong>State</strong>:  {{a['state']}}</p>
+                        <p><strong>Adjacency</strong>:  {{a['adjacency']}}</p>
+                        <p><strong>Address</strong>:  {{a['address']}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="container-title">
+                    <h2>OSPF LSAs</h2>
+                </div>
+                <div class="cards cards-ospf">
+                    {% for a in data['ospf_lsa'] %}
+                    {% if a['id'] == '0.0.0.0' %}
+                    <div class="cards-info ospf">
+                        <p><strong>Area</strong>: {{a['area']}}</p>
+                        <p><strong>Type</strong>: {{a['type']}}</p>
+                        <p><strong>ID</strong>: {{a['id']}}</p>
+                        <p><strong>Originator</strong>:  {{a['originator']}}</p>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="container-title">
+                    <h2>IP Neighbor</h2>
+                </div>
+                <div class="cards cards-neighbor">
+                    {% for a in data['neighbor'] %}
+                    <div class="cards-info neighbor">
+                        <p><strong>Name</strong>: {{a['identity']}}</p>
+                        <p><strong>Interface</strong>: {{a['interface']}}</p>
+                        <p><strong>Platform</strong>: {{a['platform']}}</p>
+                        <p><strong>Version</strong>: {{a['version']}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </main>
+    </body>
+</html>
